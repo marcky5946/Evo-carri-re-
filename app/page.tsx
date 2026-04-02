@@ -494,71 +494,72 @@ export default function Home() {
         </a>
       </div>
 
-      {/* ── 6. PARCOURS DE CHARLES ── */}
-      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{
-            color: 'white',
-            fontSize: 'clamp(1.75rem,4vw,2.25rem)',
-            fontWeight: 800,
-            marginBottom: '3rem',
-          }}>
-            De zéro à conseiller performant
-          </h2>
-
-          {/* Avatar */}
-          <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            background: '#2563eb',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 1.5rem',
-            fontSize: '1.5rem',
-            fontWeight: 800,
-            color: 'white',
-          }}>
-            CF
+      {/* ── 6. PARCOURS DE CHARLES — CEO EVO LIFE ── */}
+      <section style={{ background: '#060606', padding: '5rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: '#2563eb',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem',
+              fontSize: '1.5rem',
+              fontWeight: 800,
+              color: 'white',
+            }}>
+              CF
+            </div>
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.5rem,4vw,2rem)', fontWeight: 800, marginBottom: '0.25rem' }}>
+              Le parcours de Charles
+            </h2>
+            <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>CEO &amp; Co-fondateur, EVO LIFE</p>
           </div>
 
-          <blockquote style={{
-            background: '#0f0f0f',
-            border: '1px solid #1e1e2e',
-            borderRadius: '16px',
-            padding: '2rem',
-            marginBottom: '1.5rem',
-            textAlign: 'left',
-          }}>
-            <p style={{ color: '#d1d5db', fontSize: '1rem', lineHeight: 1.8, fontStyle: 'italic', margin: 0 }}>
-              &ldquo;Quand j&apos;ai rejoint EVO LIFE, j&apos;avais aucune expérience en finance. Avec la formation et le
-              système de leads, j&apos;ai closé mes premières ventes en moins de 3 semaines. Aujourd&apos;hui je gère
-              ma propre équipe.&rdquo;
-            </p>
-          </blockquote>
+          {/* ROADMAP */}
+          <div style={{ position: 'relative', paddingLeft: '2rem' }}>
+            {/* Ligne verticale */}
+            <div style={{
+              position: 'absolute',
+              left: '7px',
+              top: '8px',
+              bottom: '8px',
+              width: '2px',
+              background: 'linear-gradient(to bottom, #2563eb, #1e1e2e)',
+            }} />
 
-          <div style={{ color: 'white', fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.25rem' }}>
-            Charles F.
-          </div>
-          <div style={{ color: '#6b7280', fontSize: '0.85rem', marginBottom: '2rem' }}>
-            Conseiller EVO LIFE
-          </div>
-
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2rem',
-            flexWrap: 'wrap',
-          }}>
             {[
-              { val: '3 semaines', label: 'premières ventes' },
-              { val: '34 modules', label: 'complétés' },
-              { val: 'Équipe', label: 'en construction' },
-            ].map((s) => (
-              <div key={s.val} style={{ textAlign: 'center' }}>
-                <div style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.1rem' }}>{s.val}</div>
-                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>{s.label}</div>
+              { year: 'Début', title: 'Vendeur automobile', desc: 'Commence dans la vente auto. Apprend les bases: approche client, objections, closing. Découvre sa passion pour la vente.' },
+              { year: 'Ensuite', title: 'Franchise d\'entretien ménager', desc: 'Lance sa propre franchise. Apprend à gérer une business, recruter une équipe, et scaler des opérations.' },
+              { year: 'Pivot', title: 'Transition en services financiers', desc: 'Découvre le potentiel des services financiers. Se forme, obtient ses licences, commence à closer des polices.' },
+              { year: 'Scale', title: 'Fonde EVO LIFE', desc: 'Combine son expérience en vente, gestion et finance pour créer EVO LIFE. Bâtit les systèmes, la formation et l\'infrastructure IA.' },
+              { year: 'Aujourd\'hui', title: '100K+/mois en assurance', desc: 'Génère plus de 100K$/mois. Recrute et forme la prochaine génération de conseillers financiers au Québec.' },
+            ].map((step, i) => (
+              <div key={step.title} style={{ position: 'relative', marginBottom: i < 4 ? '2rem' : '0', paddingLeft: '1.5rem' }}>
+                {/* Dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '-2rem',
+                  top: '4px',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  background: i === 4 ? '#2563eb' : '#0f0f0f',
+                  border: i === 4 ? '3px solid #2563eb' : '2px solid #374151',
+                  boxShadow: i === 4 ? '0 0 12px rgba(37,99,235,0.4)' : 'none',
+                }} />
+                <div style={{ color: '#2563eb', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>
+                  {step.year}
+                </div>
+                <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', marginBottom: '0.35rem' }}>
+                  {step.title}
+                </div>
+                <div style={{ color: '#9ca3af', fontSize: '0.85rem', lineHeight: 1.6 }}>
+                  {step.desc}
+                </div>
               </div>
             ))}
           </div>
