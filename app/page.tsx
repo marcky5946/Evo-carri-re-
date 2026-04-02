@@ -287,6 +287,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CTA between 3-4 ── */}
+      <div style={{ textAlign: 'center', padding: '2rem 1.5rem', background: '#060606' }}>
+        <a
+          href="#postuler"
+          style={{
+            display: 'inline-block',
+            background: '#2563eb',
+            color: 'white',
+            padding: '1rem 3rem',
+            borderRadius: '12px',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Commencer le processus →
+        </a>
+      </div>
+
       {/* ── 4. COMMENT CA FONCTIONNE ── */}
       <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -542,6 +563,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CTA between 6-7 ── */}
+      <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: '#060606' }}>
+        <a
+          href="#postuler"
+          style={{
+            display: 'inline-block',
+            background: '#2563eb',
+            color: 'white',
+            padding: '1rem 3rem',
+            borderRadius: '12px',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Postuler maintenant →
+        </a>
+      </div>
+
       {/* ── 7. COMPARAISON ── */}
       <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -594,6 +636,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── CTA between 7-8 ── */}
+      <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: '#0a0a0a' }}>
+        <a
+          href="#postuler"
+          style={{
+            display: 'inline-block',
+            background: '#2563eb',
+            color: 'white',
+            padding: '1rem 3rem',
+            borderRadius: '12px',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Postuler maintenant →
+        </a>
+      </div>
 
       {/* ── 8. FORMULAIRE ── */}
       <section id="postuler" style={{
