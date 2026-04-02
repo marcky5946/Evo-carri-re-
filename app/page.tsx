@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import FaqAccordion from './components/FaqAccordion'
 
 type Page = 1 | 2 | 3 | 'success'
@@ -55,6 +56,7 @@ const comparisonRows = [
 ]
 
 export default function Home() {
+  const router = useRouter()
   const [currentPage, setCurrentPage] = useState<Page>(1)
   const [loading, setLoading] = useState(false)
   const [videoHovered, setVideoHovered] = useState(false)
@@ -88,7 +90,7 @@ export default function Home() {
       // silent — still show success
     } finally {
       setLoading(false)
-      setCurrentPage('success')
+      router.push('/merci')
     }
   }
 
