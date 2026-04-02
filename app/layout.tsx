@@ -9,9 +9,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "EVO LIFE — Construis une carrière à 6 chiffres | Recrutement Québec",
+  title: "EVO LIFE | Carrieres",
   description:
-    "Rejoins EVO LIFE au Québec. Formation d'élite en 34 modules, système IA, revenus illimités. Deviens conseiller en assurance vie et investissement.",
+    "Rejoins EVO LIFE au Québec. Formation d'élite en 34 modules, système IA, revenus illimités. Deviens conseiller financier et construis une carrière à 6 chiffres.",
+  keywords: "recrutement, conseiller financier, Québec, formation, services financiers, carrière",
   openGraph: {
     title: "EVO LIFE — Carrière à 6 chiffres dans les services financiers",
     description:
