@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import FaqAccordion from './components/FaqAccordion'
 
 type Page = 1 | 2 | 3 | 'success'
 
@@ -53,27 +54,12 @@ const advantages = [
   {
     icon: '🤖',
     title: 'Leads fournis par IA',
-    text: 'Nos systèmes IA qualifient tes prospects et préparent tes rencontres. Tu te concentres sur les clients, l\'IA fait le reste.',
+    text: "Nos systèmes IA qualifient tes prospects et préparent tes rencontres. Tu te concentres sur les clients, l'IA fait le reste.",
   },
   {
     icon: '📊',
     title: 'Outils de pointe',
     text: 'CRM dédié, scripts de vente testés, bibliothèque de ressources. Tout est prêt — tu appliques et tu fermes.',
-  },
-  {
-    icon: '🏢',
-    title: '14+ assureurs',
-    text: 'Accès à tous les grands noms : iA, Manuvie, Canada Vie, Sun Life, Beneva, RBC, BMO et plus. Le meilleur produit pour chaque client.',
-  },
-  {
-    icon: '💪',
-    title: 'Mentorat personnalisé',
-    text: 'Accompagnement dédié de mentors actifs qui génèrent eux-mêmes 6 chiffres. Pas de théorie — du vrai terrain.',
-  },
-  {
-    icon: '🚀',
-    title: 'Croissance illimitée',
-    text: 'Pas de plafond de revenus. Pas de territoire limité. Tu construis ton propre empire financier à ton rythme.',
   },
 ]
 
@@ -84,16 +70,6 @@ const comparisonRows = [
   { aspect: 'Outils', evo: 'CRM + IA dédiés', autre: 'Tableur Excel' },
   { aspect: 'Revenus potentiels', evo: '80 000$ — 200 000$+', autre: 'Plafonné' },
   { aspect: 'Support', evo: 'Mentorat dédié actif', autre: 'Autodidacte' },
-]
-
-const assureurs = [
-  'iA Groupe Financier',
-  'Manuvie',
-  'Canada Vie',
-  'Sun Life',
-  'Beneva',
-  'RBC',
-  'BMO',
 ]
 
 export default function Home() {
@@ -137,7 +113,7 @@ export default function Home() {
   return (
     <main style={{ background: '#0a0a0a', color: 'white', fontFamily: 'inherit', margin: 0, padding: 0 }}>
 
-      {/* ── NAVBAR ── */}
+      {/* ── 1. NAVBAR ── */}
       <nav style={{
         position: 'fixed',
         top: 0,
@@ -174,11 +150,11 @@ export default function Home() {
             letterSpacing: '0.02em',
           }}
         >
-          Postuler
+          Voir si je suis admissible
         </a>
       </nav>
 
-      {/* ── HERO ── */}
+      {/* ── 2. HERO ── */}
       <section style={{
         minHeight: '100vh',
         display: 'flex',
@@ -201,52 +177,31 @@ export default function Home() {
           marginBottom: '2rem',
           letterSpacing: '0.04em',
         }}>
-          🚀 RECRUTEMENT ACTIF — MONTRÉAL &amp; QUÉBEC
+          🚀 RECRUTEMENT EN COURS — PLACES LIMITÉES
         </div>
 
         <h1 style={{
           color: 'white',
-          fontSize: 'clamp(2.5rem,7vw,5rem)',
+          fontSize: 'clamp(2rem,6vw,4rem)',
           fontWeight: 900,
-          lineHeight: 1.05,
+          lineHeight: 1.08,
           marginBottom: '1.5rem',
           maxWidth: '900px',
         }}>
-          Deviens{' '}
-          <span style={{ color: '#2563eb' }}>Conseiller Financier</span>
-          <br />
-          chez EVO LIFE
+          On te donne le système.{' '}
+          <span style={{ color: '#2563eb' }}>Tu génères 10 000$/mois+</span>
+          {' '}en services financiers.
         </h1>
 
         <p style={{
           color: '#9ca3af',
-          fontSize: 'clamp(1rem,2.5vw,1.25rem)',
+          fontSize: 'clamp(1rem,2.5vw,1.2rem)',
           lineHeight: 1.7,
           marginBottom: '2.5rem',
-          maxWidth: '650px',
+          maxWidth: '620px',
         }}>
-          On te forme. On te fournit les leads. On te donne les outils.
-          <br />
-          Toi, tu changes la vie financière de tes clients.
+          Formation complète. Leads fournis. Outils IA. T&apos;as qu&apos;à closer.
         </p>
-
-        <div style={{
-          color: '#2563eb',
-          fontSize: 'clamp(2rem,5vw,3.5rem)',
-          fontWeight: 900,
-          marginBottom: '0.5rem',
-          letterSpacing: '-0.02em',
-        }}>
-          80 000$ — 200 000$+
-        </div>
-        <div style={{
-          color: '#6b7280',
-          fontSize: '0.9rem',
-          marginBottom: '3rem',
-          letterSpacing: '0.02em',
-        }}>
-          Potentiel de revenus annuels &bull; 100% basé sur performance
-        </div>
 
         {/* VIDEO PLACEHOLDER */}
         <div
@@ -297,53 +252,17 @@ export default function Home() {
             letterSpacing: '0.01em',
           }}
         >
-          Je veux en savoir plus →
+          Voir si je suis admissible →
         </a>
       </section>
 
-      {/* ── SOCIAL PROOF ── */}
+      {/* ── 3. STATS ── */}
       <section style={{
         background: '#060606',
         borderTop: '1px solid #1a1a2e',
         borderBottom: '1px solid #1a1a2e',
-        padding: '2rem 1.5rem',
+        padding: '5rem 1.5rem',
       }}>
-        <p style={{
-          color: '#4b5563',
-          fontSize: '0.7rem',
-          textTransform: 'uppercase',
-          letterSpacing: '0.15em',
-          marginBottom: '1.5rem',
-          textAlign: 'center',
-          fontWeight: 600,
-        }}>
-          NOS CONSEILLERS REPRÉSENTENT LES PLUS GRANDS ASSUREURS
-        </p>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '2rem',
-        }}>
-          {assureurs.map((name) => (
-            <span key={name} style={{ color: '#374151', fontWeight: 600, fontSize: '0.85rem' }}>
-              {name}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* ── STATS ── */}
-      <section style={{ background: '#0a0a0a', padding: '5rem 1.5rem' }}>
-        <h2 style={{
-          color: 'white',
-          fontSize: '2rem',
-          fontWeight: 800,
-          textAlign: 'center',
-          marginBottom: '3rem',
-        }}>
-          Pourquoi EVO LIFE?
-        </h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
@@ -354,11 +273,11 @@ export default function Home() {
         }}>
           {[
             { num: '34', label: 'Modules de formation' },
-            { num: '14+', label: 'Assureurs partenaires' },
-            { num: '100%', label: 'Revenus basés sur performance' },
+            { num: '100%', label: 'Commission — Pas de plafond' },
+            { num: 'IA 24/7', label: 'Support & Leads automatisés' },
           ].map((stat) => (
             <div key={stat.num}>
-              <div style={{ color: '#2563eb', fontSize: '3.5rem', fontWeight: 900, lineHeight: 1 }}>
+              <div style={{ color: '#2563eb', fontSize: '3rem', fontWeight: 900, lineHeight: 1 }}>
                 {stat.num}
               </div>
               <div style={{ color: '#9ca3af', fontSize: '0.9rem', marginTop: '0.5rem' }}>
@@ -369,12 +288,122 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── AVANTAGES ── */}
-      <section style={{ background: '#060606', padding: '5rem 1.5rem' }}>
+      {/* ── 4. COMMENT CA FONCTIONNE ── */}
+      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.5rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Un système clé en main. Pas de bullshit.
+            </h2>
+            <p style={{ color: '#6b7280', fontSize: '1.05rem' }}>
+              Tu ne pars pas de zéro. Tout est déjà en place.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
+            gap: '1.5rem',
+            marginTop: '3rem',
+          }}>
+            {[
+              {
+                num: '01',
+                title: 'FORMATION',
+                text: 'Tu complètes nos 34 modules. En quelques semaines, tu maîtrises le produit, le pitch et la vente.',
+              },
+              {
+                num: '02',
+                title: 'LEADS',
+                text: 'Notre système IA génère des prospects qualifiés pour toi. Tu ne perds pas ton temps en prospection froide.',
+              },
+              {
+                num: '03',
+                title: 'CLOSING',
+                text: 'Tu prends les appels, tu présentes la solution, tu fermes. Scripts et objections fournis.',
+              },
+              {
+                num: '04',
+                title: 'REVENUS',
+                text: 'Commission directe sur chaque vente. Pas de plafond. Plus tu performes, plus tu gagnes.',
+              },
+            ].map((step) => (
+              <div key={step.num} style={{
+                background: '#0f0f0f',
+                border: '1px solid #1e1e2e',
+                borderRadius: '16px',
+                padding: '2rem',
+              }}>
+                <div style={{ color: '#2563eb', fontWeight: 900, fontSize: '2rem', marginBottom: '0.75rem', lineHeight: 1 }}>
+                  {step.num}
+                </div>
+                <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.12em', marginBottom: '0.75rem' }}>
+                  {step.title}
+                </div>
+                <div style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                  {step.text}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. TU TE DEMANDES SUREMENT ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{
+            color: 'white',
+            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '3rem',
+          }}>
+            Tu te demandes sûrement...
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+            gap: '1.5rem',
+          }}>
+            {[
+              {
+                question: 'Est-ce que je suis capable?',
+                answer: "Oui. 90% de nos conseillers n'avaient aucune expérience en finance. Notre formation te prend par la main.",
+              },
+              {
+                question: "C'est quoi mon quotidien?",
+                answer: 'Tu reçois des leads, tu fais des appels, tu présentes des solutions financières. Simple et structuré.',
+              },
+              {
+                question: "C'est quoi le catch?",
+                answer: "Rien. 100% performance. Pas de frais cachés. Si tu ne vends pas, tu ne gagnes pas. Si tu vends, pas de plafond.",
+              },
+            ].map((item) => (
+              <div key={item.question} style={{
+                background: '#0f0f0f',
+                border: '1px solid #2563eb',
+                borderRadius: '16px',
+                padding: '2rem',
+              }}>
+                <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
+                  {item.question}
+                </div>
+                <div style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                  {item.answer}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. SOLUTION EVO LIFE ── */}
+      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <h2 style={{
             color: 'white',
-            fontSize: '2rem',
+            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
             fontWeight: 800,
             textAlign: 'center',
             marginBottom: '3rem',
@@ -406,17 +435,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── COMPARAISON ── */}
-      <section style={{ background: '#0a0a0a', padding: '5rem 1.5rem' }}>
+      {/* ── 7. PARCOURS DE CHARLES ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            color: 'white',
+            fontSize: 'clamp(1.75rem,4vw,2.25rem)',
+            fontWeight: 800,
+            marginBottom: '3rem',
+          }}>
+            De zéro à conseiller performant
+          </h2>
+
+          {/* Avatar */}
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            background: '#2563eb',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1.5rem',
+            fontSize: '1.5rem',
+            fontWeight: 800,
+            color: 'white',
+          }}>
+            CF
+          </div>
+
+          <blockquote style={{
+            background: '#0f0f0f',
+            border: '1px solid #1e1e2e',
+            borderRadius: '16px',
+            padding: '2rem',
+            marginBottom: '1.5rem',
+            textAlign: 'left',
+          }}>
+            <p style={{ color: '#d1d5db', fontSize: '1rem', lineHeight: 1.8, fontStyle: 'italic', margin: 0 }}>
+              &ldquo;Quand j&apos;ai rejoint EVO LIFE, j&apos;avais aucune expérience en finance. Avec la formation et le
+              système de leads, j&apos;ai closé mes premières ventes en moins de 3 semaines. Aujourd&apos;hui je gère
+              ma propre équipe.&rdquo;
+            </p>
+          </blockquote>
+
+          <div style={{ color: 'white', fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.25rem' }}>
+            Charles F.
+          </div>
+          <div style={{ color: '#6b7280', fontSize: '0.85rem', marginBottom: '2rem' }}>
+            Conseiller EVO LIFE
+          </div>
+
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '2rem',
+            flexWrap: 'wrap',
+          }}>
+            {[
+              { val: '3 semaines', label: 'premières ventes' },
+              { val: '34 modules', label: 'complétés' },
+              { val: 'Équipe', label: 'en construction' },
+            ].map((s) => (
+              <div key={s.val} style={{ textAlign: 'center' }}>
+                <div style={{ color: '#2563eb', fontWeight: 800, fontSize: '1.1rem' }}>{s.val}</div>
+                <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. COMPARAISON ── */}
+      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h2 style={{
             color: 'white',
-            fontSize: '2rem',
+            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
             fontWeight: 800,
             textAlign: 'center',
             marginBottom: '3rem',
           }}>
-            L&apos;avantage EVO LIFE
+            EVO LIFE vs Cabinet traditionnel
           </h2>
           <div style={{ overflowX: 'auto' }}>
             <table style={{
@@ -459,16 +559,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FORMULAIRE ── */}
+      {/* ── 9. FILTRE ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.5rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Attends. Ce n&apos;est PAS pour tout le monde.
+            </h2>
+            <p style={{ color: '#6b7280', fontSize: '1rem' }}>
+              On préfère être honnêtes maintenant plutôt que perdre ton temps.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '2rem' }}>
+            {/* NOT FOR */}
+            <div style={{
+              background: '#0f0f0f',
+              border: '1px solid #3f1010',
+              borderRadius: '16px',
+              padding: '2rem',
+            }}>
+              <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
+                ✗ &nbsp;Pas pour toi si...
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                {[
+                  'Tu cherches un revenu garanti sans effort',
+                  'Tu n\'es pas prêt à apprendre et te former',
+                  'Tu veux un 9 à 5 confortable sans stress',
+                  'Tu n\'es pas à l\'aise de parler aux gens',
+                  'Tu veux des résultats sans mettre le travail',
+                ].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                    <span style={{ color: '#f87171', flexShrink: 0, marginTop: '2px' }}>✗</span>
+                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FOR */}
+            <div style={{
+              background: '#0f0f0f',
+              border: '1px solid #14532d',
+              borderRadius: '16px',
+              padding: '2rem',
+            }}>
+              <div style={{ color: '#4ade80', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
+                ✓ &nbsp;Par contre, si...
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                {[
+                  'Tu veux un revenu sans plafond basé sur tes efforts',
+                  'Tu es prêt à apprendre un nouveau métier',
+                  'Tu veux un système qui travaille pour toi',
+                  'Tu aimes aider les gens',
+                  'Tu es prêt à te dépasser',
+                ].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                    <span style={{ color: '#4ade80', flexShrink: 0, marginTop: '2px' }}>✓</span>
+                    <span style={{ color: '#d1d5db', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                marginTop: '1.5rem',
+                padding: '1rem',
+                background: 'rgba(37,99,235,0.1)',
+                border: '1px solid rgba(37,99,235,0.3)',
+                borderRadius: '10px',
+                color: '#60a5fa',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                textAlign: 'center',
+              }}>
+                Alors tu es probablement fait pour EVO LIFE.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 10. FORMULAIRE ── */}
       <section id="postuler" style={{
-        background: '#060606',
-        padding: '5rem 1.5rem',
+        background: '#0a0a0a',
+        padding: '6rem 1.5rem',
         borderTop: '2px solid #1d4ed8',
       }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <h2 style={{ color: 'white', fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem' }}>
-              Prêt à bâtir ta carrière?
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.25rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Voir si je suis admissible
             </h2>
             <p style={{ color: '#6b7280', fontSize: '1rem' }}>
               3 minutes · Entrevue exploratoire · Aucun engagement
@@ -768,17 +949,102 @@ export default function Home() {
               </div>
             )}
 
-            {/* SUCCESS */}
+            {/* SUCCESS PAGE */}
             {currentPage === 'success' && (
-              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✅</div>
-                <div style={{ color: 'white', fontWeight: 800, fontSize: '1.4rem', marginBottom: '0.75rem' }}>
-                  Candidature reçue!
+              <div style={{ textAlign: 'center' }}>
+                {/* Animated check */}
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: 'rgba(37,99,235,0.15)',
+                  border: '3px solid #2563eb',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1.5rem',
+                  fontSize: '2.5rem',
+                  animation: 'pulse 1.5s ease-in-out',
+                }}>
+                  ✓
                 </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                  Notre équipe analyse ton dossier.
-                  <br />
-                  Tu recevras une réponse dans les <strong style={{ color: '#60a5fa' }}>24h ouvrables</strong>.
+                <style>{`@keyframes pulse { 0%{transform:scale(0.5);opacity:0} 60%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }`}</style>
+
+                <h3 style={{ color: 'white', fontWeight: 800, fontSize: '1.6rem', marginBottom: '0.5rem' }}>
+                  Candidature reçue!
+                </h3>
+                <p style={{ color: '#6b7280', fontSize: '0.95rem', marginBottom: '2.5rem' }}>
+                  Voici ce qui se passe maintenant :
+                </p>
+
+                {/* 3 steps */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '3rem', textAlign: 'left' }}>
+                  {[
+                    { num: '1', title: 'Évaluation', text: 'On examine ta candidature dans les 24–48h.' },
+                    { num: '2', title: 'Appel exploratoire', text: 'Si ton profil est retenu, on te contacte pour un appel de 15 minutes.' },
+                    { num: '3', title: 'Onboarding', text: 'Si c\'est un bon fit, tu commences ta formation immédiatement.' },
+                  ].map((step) => (
+                    <div key={step.num} style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '1rem',
+                      background: 'rgba(37,99,235,0.06)',
+                      border: '1px solid rgba(37,99,235,0.15)',
+                      borderRadius: '12px',
+                      padding: '1rem 1.25rem',
+                    }}>
+                      <div style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '50%',
+                        background: '#2563eb',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontWeight: 700,
+                        fontSize: '0.8rem',
+                        flexShrink: 0,
+                      }}>
+                        {step.num}
+                      </div>
+                      <div>
+                        <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.25rem' }}>{step.title}</div>
+                        <div style={{ color: '#9ca3af', fontSize: '0.85rem', lineHeight: 1.5 }}>{step.text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* En attendant */}
+                <div style={{
+                  borderTop: '1px solid #1e1e2e',
+                  paddingTop: '2rem',
+                  textAlign: 'left',
+                }}>
+                  <p style={{ color: '#6b7280', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem', fontWeight: 600 }}>
+                    EN ATTENDANT
+                  </p>
+                  <p style={{ color: 'white', fontWeight: 700, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
+                    Voici comment notre système aide nos conseillers à générer plus de 10 000$/mois
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {[
+                      { title: 'Revenus moyens', text: 'Nos conseillers actifs génèrent entre 5K et 15K$/mois après 3 mois.' },
+                      { title: 'Système IA', text: 'Tu ne prospectes pas. Notre IA te fournit des leads qualifiés chaque semaine.' },
+                      { title: 'Croissance', text: 'En 6 mois, tu peux bâtir ta propre équipe et toucher des overrides.' },
+                    ].map((card) => (
+                      <div key={card.title} style={{
+                        background: '#111111',
+                        border: '1px solid #1e1e2e',
+                        borderRadius: '10px',
+                        padding: '1rem 1.25rem',
+                      }}>
+                        <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.3rem' }}>{card.title}</div>
+                        <div style={{ color: '#9ca3af', fontSize: '0.85rem', lineHeight: 1.5 }}>{card.text}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -787,35 +1053,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER CTA ── */}
+      {/* ── 11. FAQ ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <h2 style={{
+            color: 'white',
+            fontSize: 'clamp(1.75rem,4vw,2.25rem)',
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '3rem',
+          }}>
+            Questions fréquentes
+          </h2>
+          <FaqAccordion />
+        </div>
+      </section>
+
+      {/* ── 12. FOOTER CTA ── */}
       <section style={{
         background: '#1d4ed8',
-        padding: '4rem 1.5rem',
+        padding: '5rem 1.5rem',
         textAlign: 'center',
       }}>
-        <h2 style={{ color: 'white', fontSize: '2rem', fontWeight: 800, marginBottom: '1.5rem', lineHeight: 1.2 }}>
+        <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.25rem)', fontWeight: 800, marginBottom: '1rem', lineHeight: 1.2 }}>
           Ta prochaine étape commence maintenant.
         </h2>
+        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', marginBottom: '2rem' }}>
+          Places limitées — Recrutement en cours
+        </p>
         <a
           href="#postuler"
           style={{
             display: 'inline-block',
-            background: 'transparent',
-            color: 'white',
-            padding: '0.9rem 2.5rem',
+            background: 'white',
+            color: '#1d4ed8',
+            padding: '1rem 2.5rem',
             borderRadius: '10px',
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: '1rem',
             textDecoration: 'none',
-            border: '2px solid rgba(255,255,255,0.6)',
             letterSpacing: '0.02em',
           }}
         >
-          Postuler maintenant →
+          Commencer le processus →
         </a>
       </section>
 
-      {/* ── FOOTER ── */}
+      {/* ── 13. FOOTER ── */}
       <footer style={{
         padding: '2rem',
         background: '#050505',
@@ -823,7 +1107,7 @@ export default function Home() {
         borderTop: '1px solid #1a1a2e',
       }}>
         <p style={{ color: '#374151', fontSize: '0.85rem' }}>
-          &copy; 2026 EVO LIFE | GESTION GRDT INC
+          &copy; 2026 EVO LIFE
         </p>
       </footer>
 
