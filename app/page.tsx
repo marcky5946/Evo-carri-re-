@@ -1,993 +1,399 @@
-'use client'
+import FaqAccordion from './components/FaqAccordion'
 
-import { useState, useEffect, useRef } from 'react'
-import { motion, useInView, AnimatePresence, type Variants } from 'framer-motion'
-
-// ─── Animation variants ──────────────────────────────────────────────────────
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.0, 0.0, 0.2, 1] } },
-}
-
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-}
-
-// ─── Deterministic particle positions (avoids SSR hydration mismatch) ────────
-
-const PARTICLES: Array<{ left: string; top: string; delay: string; duration: string }> = [
-  { left: '5%', top: '10%', delay: '0s', duration: '4s' },
-  { left: '15%', top: '75%', delay: '0.5s', duration: '5s' },
-  { left: '25%', top: '30%', delay: '1s', duration: '3.5s' },
-  { left: '35%', top: '85%', delay: '1.5s', duration: '4.5s' },
-  { left: '45%', top: '15%', delay: '0.3s', duration: '6s' },
-  { left: '55%', top: '55%', delay: '2s', duration: '4s' },
-  { left: '65%', top: '25%', delay: '0.8s', duration: '5.5s' },
-  { left: '75%', top: '70%', delay: '1.2s', duration: '3s' },
-  { left: '85%', top: '40%', delay: '2.5s', duration: '4.5s' },
-  { left: '92%', top: '80%', delay: '0.6s', duration: '5s' },
-  { left: '8%', top: '50%', delay: '1.8s', duration: '4s' },
-  { left: '20%', top: '90%', delay: '0.9s', duration: '3.5s' },
-  { left: '40%', top: '45%', delay: '2.2s', duration: '5s' },
-  { left: '60%', top: '5%', delay: '1.4s', duration: '6s' },
-  { left: '70%', top: '95%', delay: '0.2s', duration: '4.5s' },
-  { left: '80%', top: '20%', delay: '3s', duration: '3.5s' },
-  { left: '90%', top: '60%', delay: '1.6s', duration: '4s' },
-  { left: '30%', top: '65%', delay: '0.4s', duration: '5.5s' },
-  { left: '50%', top: '35%', delay: '2.8s', duration: '3s' },
-  { left: '12%', top: '42%', delay: '1.1s', duration: '4.5s' },
-]
-
-// ─── Navbar ───────────────────────────────────────────────────────────────────
-
-function Navbar() {
+export default function Home() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/5">
-      <span className="text-xl font-extrabold text-gradient-gold tracking-wide">
-        EVO LIFE
-      </span>
-      <motion.a
-        href="#apply"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-5 py-2 bg-[#1d4ed8] hover:bg-[#1d4ed8]/80 text-white text-sm font-semibold rounded-lg transition-colors"
-      >
-        Postuler
-      </motion.a>
-    </nav>
-  )
-}
-
-// ─── Hero ─────────────────────────────────────────────────────────────────────
-
-function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden bg-[#0a0a0a]">
-      {/* Radial glow */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#1d4ed8]/10 blur-[140px]" />
-      </div>
-
-      {/* Particles */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {PARTICLES.map((p, i) => (
-          <span
-            key={i}
-            className="particle"
-            style={
-              {
-                left: p.left,
-                top: p.top,
-                '--particle-delay': p.delay,
-                '--particle-duration': p.duration,
-              } as React.CSSProperties
-            }
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/5 border border-white/10 rounded-full text-sm text-white/80"
-        >
-          <span>🔥</span>
-          <span>Recrutement actif — Montréal, Québec</span>
-        </motion.div>
-
-        {/* H1 */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6"
-        >
-          Construis une carrière à{' '}
-          <span className="text-gradient-gold">6 chiffres</span>{' '}
-          dans les services financiers
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-white/60 mb-10 max-w-2xl mx-auto"
-        >
-          Formation d&apos;élite · Système IA · Revenus illimités · Équipe EVO LIFE
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <motion.a
-            href="#apply"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-[#1d4ed8] hover:bg-[#1d4ed8]/90 text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-[#1d4ed8]/25"
+    <main className="min-h-screen bg-[#0a0a0a] text-white">
+      {/* ── NAVBAR ── */}
+      <nav className="sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur border-b border-zinc-800/50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <span className="text-amber-400 font-bold text-2xl tracking-tight">EVO LIFE</span>
+          <a
+            href="#postuler"
+            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
           >
-            Je postule maintenant
-          </motion.a>
-          <motion.a
-            href="#solution"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 border border-white/20 hover:border-white/40 text-white font-bold text-lg rounded-xl transition-colors"
-          >
-            En savoir plus
-          </motion.a>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
+            Postuler
+          </a>
+        </div>
+      </nav>
 
-// ─── Animated counter ─────────────────────────────────────────────────────────
-
-function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
-  const [count, setCount] = useState(0)
-  const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true })
-
-  useEffect(() => {
-    if (!isInView) return
-    const duration = 2000
-    const startTime = performance.now()
-
-    const update = (now: number) => {
-      const elapsed = now - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(eased * end))
-      if (progress < 1) requestAnimationFrame(update)
-    }
-
-    requestAnimationFrame(update)
-  }, [isInView, end])
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  )
-}
-
-// ─── Stats ────────────────────────────────────────────────────────────────────
-
-const STATS: Array<{ end: number; suffix: string; label: string }> = [
-  { end: 34, suffix: '', label: 'Modules de formation' },
-  { end: 100, suffix: '%', label: 'Commission sur vos ventes' },
-  { end: 24, suffix: '/7', label: 'Support IA inclus' },
-]
-
-function StatsSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section ref={ref} className="py-20 bg-[#111111] border-y border-[#f59e0b]/10">
-      <div className="max-w-5xl mx-auto px-4">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {STATS.map((stat) => (
-            <motion.div
-              key={stat.label}
-              variants={fadeUp}
-              className="text-center p-8 border border-[#f59e0b]/20 rounded-2xl bg-[#0a0a0a]/50"
-            >
-              <div className="text-5xl md:text-6xl font-extrabold text-gradient-gold mb-3">
-                <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-              </div>
-              <p className="text-white/60 text-lg">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Problem ──────────────────────────────────────────────────────────────────
-
-const PROBLEMS: string[] = [
-  'Zéro formation réelle — On te lâche dans le vide',
-  'Aucun système pour trouver des clients — Tu pars de zéro',
-  'Pas de support — Tu es seul face aux objections',
-]
-
-function ProblemSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section ref={ref} className="py-24 bg-[#0a0a0a] px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white text-center mb-16"
-        >
-          Pourquoi la plupart{' '}
-          <span className="text-red-400">échouent</span>{' '}
-          dans les services financiers
-        </motion.h2>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {PROBLEMS.map((problem) => (
-            <motion.div
-              key={problem}
-              variants={fadeUp}
-              className="p-6 bg-[#111111] border border-red-500/20 rounded-2xl flex gap-4 items-start"
-            >
-              <span className="text-2xl flex-shrink-0">❌</span>
-              <p className="text-white/70 text-base leading-relaxed">{problem}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Solution ─────────────────────────────────────────────────────────────────
-
-interface SolutionItem {
-  icon: string
-  title: string
-  description: string
-}
-
-const SOLUTIONS: SolutionItem[] = [
-  {
-    icon: '🎓',
-    title: 'Formation Élite',
-    description: '34 modules, experts du terrain, de la prospection au closing',
-  },
-  {
-    icon: '🤖',
-    title: 'Système IA',
-    description: 'Prospects automatisés, suivis intelligents, tu te concentres sur closer',
-  },
-  {
-    icon: '💰',
-    title: 'Revenus Illimités',
-    description: "Commissions directes + override d'équipe. Pas de plafond.",
-  },
-]
-
-function SolutionSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section id="solution" ref={ref} className="py-24 bg-[#111111] px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white text-center mb-16"
-        >
-          EVO LIFE a résolu les{' '}
-          <span className="text-gradient-blue">3 obstacles</span>
-        </motion.h2>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-        >
-          {SOLUTIONS.map((solution) => (
-            <motion.div
-              key={solution.title}
-              variants={fadeUp}
-              className="p-8 bg-[#0a0a0a] border border-[#1d4ed8]/30 rounded-2xl hover:border-[#1d4ed8]/60 transition-colors"
-            >
-              <div className="text-4xl mb-4">{solution.icon}</div>
-              <h3 className="text-xl font-bold text-white mb-3">{solution.title}</h3>
-              <p className="text-white/60 leading-relaxed">{solution.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Process ──────────────────────────────────────────────────────────────────
-
-interface Step {
-  icon: string
-  title: string
-  desc: string
-  step: number
-}
-
-const STEPS: Step[] = [
-  { icon: '📋', title: 'Entrevue exploratoire', desc: '30 min', step: 1 },
-  { icon: '🎓', title: 'Formation intensive', desc: '34 modules', step: 2 },
-  { icon: '🚀', title: 'Premiers clients et revenus', desc: 'Semaines 2-4', step: 3 },
-  { icon: '💰', title: 'Scale et liberté financière', desc: '6 chiffres+', step: 4 },
-]
-
-function ProcessSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section ref={ref} className="py-24 bg-[#0a0a0a] px-4 overflow-hidden">
-      <div className="max-w-5xl mx-auto">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white text-center mb-16"
-        >
-          Ton parcours vers la{' '}
-          <span className="text-gradient-gold">liberté financière</span>
-        </motion.h2>
-
-        {/* Desktop */}
-        <div className="hidden md:block relative">
-          <div className="absolute top-12 left-[12.5%] right-[12.5%] h-px bg-white/5">
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }}
-              style={{ transformOrigin: 'left' }}
-              className="absolute inset-0 bg-gradient-to-r from-[#1d4ed8] to-[#f59e0b]"
-            />
+      {/* ── HERO ── */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="inline-flex items-center gap-2 border border-amber-400/30 bg-amber-400/10 text-amber-400 rounded-full px-4 py-1 text-sm font-medium">
+            🔥 Recrutement actif — Montréal, Québec
           </div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            className="grid grid-cols-4 gap-4"
-          >
-            {STEPS.map((s) => (
-              <motion.div
-                key={s.step}
-                variants={fadeUp}
-                className="flex flex-col items-center text-center"
-              >
-                <div className="w-24 h-24 flex items-center justify-center bg-[#111111] border-2 border-[#1d4ed8]/40 rounded-full mb-4 text-3xl relative z-10">
-                  {s.icon}
-                </div>
-                <div className="w-6 h-6 rounded-full bg-[#f59e0b] mb-3 text-xs font-bold text-black flex items-center justify-center">
-                  {s.step}
-                </div>
-                <h3 className="text-white font-semibold text-sm mb-1">{s.title}</h3>
-                <p className="text-white/40 text-xs">{s.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Mobile */}
-        <div className="md:hidden space-y-0">
-          {STEPS.map((s, i) => (
-            <motion.div
-              key={s.step}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
-              transition={{ delay: i * 0.15 }}
-              className="flex gap-4 pb-8 last:pb-0"
-            >
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 flex items-center justify-center bg-[#111111] border-2 border-[#1d4ed8]/40 rounded-full text-xl flex-shrink-0">
-                  {s.icon}
-                </div>
-                {i < STEPS.length - 1 && (
-                  <div className="w-px flex-1 bg-[#1d4ed8]/20 mt-2" />
-                )}
-              </div>
-              <div className="pt-2">
-                <div className="text-xs text-[#f59e0b] font-bold mb-1 tracking-wider">
-                  ÉTAPE {s.step}
-                </div>
-                <h3 className="text-white font-semibold mb-1">{s.title}</h3>
-                <p className="text-white/40 text-sm">{s.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Profile ──────────────────────────────────────────────────────────────────
-
-const FOR_YOU: string[] = [
-  'Tu veux des revenus sans plafond',
-  'Tu es ambitieux et orienté résultats',
-  'Tu veux apprendre et te former',
-  'Tu es basé au Québec',
-  'Tu aimes aider les gens',
-]
-
-const NOT_FOR_YOU: string[] = [
-  'Tu cherches un salaire fixe garanti',
-  'Tu veux travailler sans effort',
-  'Tu as peur du téléphone',
-  'Tu cherches un emploi 9 à 5',
-  'Tu veux des résultats sans investissement',
-]
-
-function ProfileSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section ref={ref} className="py-24 bg-[#111111] px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white text-center mb-16"
-        >
-          Le profil <span className="text-gradient-gold">EVO LIFE</span>
-        </motion.h2>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          <motion.div
-            variants={fadeUp}
-            className="p-8 bg-[#0a0a0a] border border-green-500/20 rounded-2xl"
-          >
-            <h3 className="text-xl font-bold text-green-400 mb-6">✅ Pour toi si...</h3>
-            <ul className="space-y-3">
-              {FOR_YOU.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-white/70">
-                  <span className="text-green-400 flex-shrink-0 mt-0.5">•</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            className="p-8 bg-[#0a0a0a] border border-red-500/20 rounded-2xl"
-          >
-            <h3 className="text-xl font-bold text-red-400 mb-6">❌ Pas pour toi si...</h3>
-            <ul className="space-y-3">
-              {NOT_FOR_YOU.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-white/70">
-                  <span className="text-red-400 flex-shrink-0 mt-0.5">•</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Form ─────────────────────────────────────────────────────────────────────
-
-interface ApplicationFormData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  city: string
-  experience: string
-  source: string
-  message: string
-}
-
-interface FormErrors {
-  firstName?: string
-  lastName?: string
-  email?: string
-  phone?: string
-  city?: string
-  experience?: string
-  source?: string
-}
-
-interface ApiResponse {
-  success: boolean
-  message?: string
-  error?: string
-}
-
-const EMPTY_FORM: ApplicationFormData = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  city: '',
-  experience: '',
-  source: '',
-  message: '',
-}
-
-function fieldClass(hasError?: boolean): string {
-  return `w-full px-4 py-3 bg-[#0a0a0a] border ${
-    hasError ? 'border-red-500' : 'border-white/10'
-  } rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-[#1d4ed8] transition-colors`
-}
-
-function FormSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  const [form, setForm] = useState<ApplicationFormData>(EMPTY_FORM)
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [serverError, setServerError] = useState('')
-
-  function validate(): boolean {
-    const next: FormErrors = {}
-    if (!form.firstName.trim()) next.firstName = 'Prénom requis'
-    if (!form.lastName.trim()) next.lastName = 'Nom requis'
-    if (!form.email.trim()) next.email = 'Email requis'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = 'Email invalide'
-    if (!form.phone.trim()) next.phone = 'Téléphone requis'
-    if (!form.city) next.city = 'Ville requise'
-    if (!form.experience) next.experience = 'Expérience requise'
-    if (!form.source) next.source = 'Source requise'
-    setErrors(next)
-    return Object.keys(next).length === 0
-  }
-
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-    const field = name as keyof FormErrors
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }))
-  }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (!validate()) return
-    setLoading(true)
-    setServerError('')
-    try {
-      const res = await fetch('/api/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      const data = (await res.json()) as ApiResponse
-      if (data.success) {
-        setSuccess(true)
-      } else {
-        setServerError(data.error ?? 'Une erreur est survenue')
-      }
-    } catch {
-      setServerError('Une erreur est survenue. Veuillez réessayer.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <section id="apply" ref={ref} className="py-24 bg-[#0f0f0f] border-t-2 border-[#1d4ed8] px-4">
-      <div className="max-w-2xl mx-auto">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Prêt à changer ta{' '}
-            <span className="text-gradient-gold">trajectoire?</span>
-          </h2>
-          <p className="text-white/50">
-            Entrevue exploratoire gratuite · 30 minutes · Aucun engagement
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+            Construis une carrière à{' '}
+            <span className="text-blue-400">6 chiffres</span> dans les services
+            financiers
+          </h1>
+          <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+            Formation d&apos;élite · Système IA · Revenus illimités
           </p>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          transition={{ delay: 0.2 }}
-        >
-          <AnimatePresence mode="wait">
-            {success ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center p-12 bg-[#111111] border border-green-500/30 rounded-2xl"
-              >
-                <div className="text-5xl mb-4">🎉</div>
-                <h3 className="text-2xl font-bold text-white mb-2">Candidature reçue!</h3>
-                <p className="text-white/60">Nous vous contacterons dans 24-48h.</p>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                onSubmit={handleSubmit}
-                className="space-y-5 p-8 bg-[#111111] border border-white/5 rounded-2xl"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <input
-                      name="firstName"
-                      placeholder="Prénom *"
-                      value={form.firstName}
-                      onChange={handleChange}
-                      className={fieldClass(!!errors.firstName)}
-                    />
-                    {errors.firstName && (
-                      <p className="text-red-400 text-xs mt-1">{errors.firstName}</p>
-                    )}
-                  </div>
-                  <div>
-                    <input
-                      name="lastName"
-                      placeholder="Nom *"
-                      value={form.lastName}
-                      onChange={handleChange}
-                      className={fieldClass(!!errors.lastName)}
-                    />
-                    {errors.lastName && (
-                      <p className="text-red-400 text-xs mt-1">{errors.lastName}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email *"
-                    value={form.email}
-                    onChange={handleChange}
-                    className={fieldClass(!!errors.email)}
-                  />
-                  {errors.email && (
-                    <p className="text-red-400 text-xs mt-1">{errors.email}</p>
-                  )}
-                </div>
-
-                <div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Téléphone *"
-                    value={form.phone}
-                    onChange={handleChange}
-                    className={fieldClass(!!errors.phone)}
-                  />
-                  {errors.phone && (
-                    <p className="text-red-400 text-xs mt-1">{errors.phone}</p>
-                  )}
-                </div>
-
-                <div>
-                  <select
-                    name="city"
-                    value={form.city}
-                    onChange={handleChange}
-                    className={fieldClass(!!errors.city)}
-                  >
-                    <option value="" disabled>
-                      Ville/Région *
-                    </option>
-                    {['Montréal', 'Laval', 'Québec', 'Longueuil', 'Sherbrooke', 'Autre'].map(
-                      (c) => (
-                        <option key={c} value={c}>
-                          {c}
-                        </option>
-                      )
-                    )}
-                  </select>
-                  {errors.city && (
-                    <p className="text-red-400 text-xs mt-1">{errors.city}</p>
-                  )}
-                </div>
-
-                <div>
-                  <select
-                    name="experience"
-                    value={form.experience}
-                    onChange={handleChange}
-                    className={fieldClass(!!errors.experience)}
-                  >
-                    <option value="" disabled>
-                      Expérience en vente *
-                    </option>
-                    {['Aucune', '1-2 ans', '3-5 ans', '5+ ans'].map((e) => (
-                      <option key={e} value={e}>
-                        {e}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.experience && (
-                    <p className="text-red-400 text-xs mt-1">{errors.experience}</p>
-                  )}
-                </div>
-
-                <div>
-                  <select
-                    name="source"
-                    value={form.source}
-                    onChange={handleChange}
-                    className={fieldClass(!!errors.source)}
-                  >
-                    <option value="" disabled>
-                      Comment vous avez entendu parler de nous *
-                    </option>
-                    {['LinkedIn', 'Instagram', 'Facebook', 'Référence', 'Autre'].map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.source && (
-                    <p className="text-red-400 text-xs mt-1">{errors.source}</p>
-                  )}
-                </div>
-
-                <div>
-                  <textarea
-                    name="message"
-                    placeholder="Message (optionnel)"
-                    value={form.message}
-                    onChange={handleChange}
-                    rows={4}
-                    className={`${fieldClass()} resize-none`}
-                  />
-                </div>
-
-                {serverError && (
-                  <p className="text-red-400 text-sm text-center">{serverError}</p>
-                )}
-
-                <motion.button
-                  type="submit"
-                  disabled={loading}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-4 bg-[#1d4ed8] hover:bg-[#1d4ed8]/90 disabled:opacity-50 text-white font-bold text-lg rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  {loading ? (
-                    <>
-                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    'Envoyer ma candidature →'
-                  )}
-                </motion.button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── FAQ ──────────────────────────────────────────────────────────────────────
-
-interface FaqItem {
-  q: string
-  a: string
-}
-
-const FAQS: FaqItem[] = [
-  {
-    q: "Ai-je besoin d'expérience en finance?",
-    a: "Non. Notre formation de 34 modules te forme de zéro. Des centaines de conseillers ont démarré sans aucune expérience préalable.",
-  },
-  {
-    q: 'Combien puis-je gagner?',
-    a: "Débutant: 30-60K$/an. Expérimenté: 100K$+. Pas de plafond — tes revenus sont directement liés à tes efforts.",
-  },
-  {
-    q: 'Est-ce du MLM?',
-    a: "Non. Structure directe. Tu es payé sur tes ventes personnelles uniquement. Pas de recrutement obligatoire, pas de frais cachés.",
-  },
-  {
-    q: 'Combien de temps avant les premières commissions?',
-    a: "2-4 semaines avec notre formation accélérée. Tu seras opérationnel rapidement grâce à notre système IA.",
-  },
-  {
-    q: 'Est-ce que je travaille seul?',
-    a: "Non. Équipe, mentors, et système IA 24/7 à ta disposition. Tu ne seras jamais laissé sans support.",
-  },
-]
-
-function FAQSection() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  return (
-    <section ref={ref} className="py-24 bg-[#111111] px-4">
-      <div className="max-w-3xl mx-auto">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white text-center mb-16"
-        >
-          Questions <span className="text-gradient-blue">fréquentes</span>
-        </motion.h2>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="space-y-4"
-        >
-          {FAQS.map((faq, i) => (
-            <motion.div
-              key={i}
-              variants={fadeUp}
-              className="border border-white/10 rounded-xl overflow-hidden"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <a
+              href="#postuler"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors"
             >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left text-white font-semibold hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                <span>{faq.q}</span>
-                <motion.span
-                  animate={{ rotate: openIndex === i ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[#f59e0b] flex-shrink-0 ml-4 text-xs"
+              Je postule maintenant
+            </a>
+            <a
+              href="#solution"
+              className="border border-zinc-600 hover:border-zinc-400 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
+            >
+              En savoir plus
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS BAR ── */}
+      <section className="bg-zinc-900 border-y border-zinc-800 py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+            <div>
+              <p className="text-amber-400 text-4xl font-bold">34</p>
+              <p className="text-zinc-400 mt-1">Modules de formation</p>
+            </div>
+            <div>
+              <p className="text-amber-400 text-4xl font-bold">100%</p>
+              <p className="text-zinc-400 mt-1">Commission — revenus illimités</p>
+            </div>
+            <div>
+              <p className="text-amber-400 text-4xl font-bold">24/7</p>
+              <p className="text-zinc-400 mt-1">Support IA disponible</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROBLÈME ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
+            Pourquoi la plupart échouent
+          </h2>
+          <p className="text-zinc-400 text-center mb-12 max-w-xl mx-auto">
+            3 obstacles récurrents qui bloquent les conseillers financiers avant même de démarrer.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-zinc-900 border border-red-900/50 rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">❌</span>
+              <h3 className="text-white font-bold text-lg">Pas de formation structurée</h3>
+              <p className="text-zinc-400">
+                La plupart des recruteurs te laissent te débrouiller seul avec un manuel PDF. Sans
+                système, tu brûles tes contacts et tu abandonnes en 3 mois.
+              </p>
+            </div>
+            <div className="bg-zinc-900 border border-red-900/50 rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">❌</span>
+              <h3 className="text-white font-bold text-lg">Aucun outil moderne</h3>
+              <p className="text-zinc-400">
+                Sans CRM ni IA pour qualifier les prospects, tu perds des heures sur des
+                conversations qui ne mènent nulle part.
+              </p>
+            </div>
+            <div className="bg-zinc-900 border border-red-900/50 rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">❌</span>
+              <h3 className="text-white font-bold text-lg">Revenu imprévisible</h3>
+              <p className="text-zinc-400">
+                Sans processus de vente clair et reproductible, les revenus restent instables et
+                il est impossible de planifier sa croissance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOLUTION ── */}
+      <section id="solution" className="py-20 px-6 bg-zinc-950">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
+            EVO LIFE a résolu les 3 obstacles
+          </h2>
+          <p className="text-zinc-400 text-center mb-12 max-w-xl mx-auto">
+            Un système complet, éprouvé, conçu pour te mener du départ à la liberté financière.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-zinc-900 border border-blue-800/50 hover:border-blue-600/50 transition-colors rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">🎓</span>
+              <h3 className="text-white font-bold text-lg">Formation Élite</h3>
+              <p className="text-zinc-400">
+                34 modules structurés, accessibles en ligne, avec coaching live. Tu passes de zéro
+                à conseiller certifié en 4 à 8 semaines.
+              </p>
+            </div>
+            <div className="bg-zinc-900 border border-blue-800/50 hover:border-blue-600/50 transition-colors rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">🤖</span>
+              <h3 className="text-white font-bold text-lg">Système IA</h3>
+              <p className="text-zinc-400">
+                Notre IA propriétaire qualifie tes prospects, prépare tes rencontres et optimise
+                ton suivi — 24h/24, 7j/7. Tu te concentres sur les clients, l&apos;IA fait le reste.
+              </p>
+            </div>
+            <div className="bg-zinc-900 border border-blue-800/50 hover:border-blue-600/50 transition-colors rounded-2xl p-8 space-y-4">
+              <span className="text-3xl">💰</span>
+              <h3 className="text-white font-bold text-lg">Revenus Illimités</h3>
+              <p className="text-zinc-400">
+                100% commission avec un processus de vente clair et reproductible. Nos meilleurs
+                conseillers atteignent 6 chiffres dès leur première année complète.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESSUS ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
+            4 étapes vers ta liberté financière
+          </h2>
+          <p className="text-zinc-400 text-center mb-16 max-w-xl mx-auto">
+            Un chemin clair, du premier contact jusqu&apos;aux revenus à 6 chiffres.
+          </p>
+          <div className="relative">
+            <div className="hidden md:block absolute top-8 left-[calc(12.5%+1rem)] right-[calc(12.5%+1rem)] h-0.5 bg-zinc-700" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                { num: '1', icon: '📋', title: 'Entrevue', desc: 'Appel exploratoire de 30 minutes pour évaluer le fit.' },
+                { num: '2', icon: '🎓', title: 'Formation', desc: '34 modules en ligne avec coaching live hebdomadaire.' },
+                { num: '3', icon: '🚀', title: 'Lancement', desc: 'Tes premiers clients avec le support de ton mentor.' },
+                { num: '4', icon: '💰', title: 'Liberté', desc: 'Revenus à 6 chiffres et carrière à long terme.' },
+              ].map((step) => (
+                <div key={step.num} className="flex flex-col items-center text-center space-y-3">
+                  <div className="relative z-10 w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">
+                    {step.num}
+                  </div>
+                  <span className="text-3xl">{step.icon}</span>
+                  <h3 className="text-white font-bold text-lg">{step.title}</h3>
+                  <p className="text-zinc-400 text-sm">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROFIL ── */}
+      <section className="py-20 px-6 bg-zinc-950">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
+            Est-ce que c&apos;est fait pour toi?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-emerald-900/20 border border-emerald-800/30 rounded-2xl p-8">
+              <h3 className="text-emerald-400 font-bold text-xl mb-6">✅ Pour toi si...</h3>
+              <ul className="space-y-3">
+                {[
+                  'Tu veux construire des revenus sans plafond',
+                  "Tu es prêt à investir en toi-même et te former sérieusement",
+                  'Tu aimes aider les gens à atteindre leurs objectifs financiers',
+                  'Tu veux la flexibilité de travailler à ton propre rythme',
+                  "Tu es motivé par les résultats, pas par l'heure",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-300">
+                    <span className="text-emerald-400 mt-0.5 flex-shrink-0">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-red-900/20 border border-red-800/30 rounded-2xl p-8">
+              <h3 className="text-red-400 font-bold text-xl mb-6">❌ Pas pour toi si...</h3>
+              <ul className="space-y-3">
+                {[
+                  'Tu cherches un salaire fixe garanti dès le départ',
+                  "Tu n'es pas prêt à suivre une formation et à appliquer le système",
+                  'Tu veux un emploi 9-to-5 sans responsabilité de tes résultats',
+                  'Tu n\'as pas la motivation de prendre en charge ton développement',
+                  'Tu cherches du succès rapide sans effort ni discipline',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-300">
+                    <span className="text-red-400 mt-0.5 flex-shrink-0">✗</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="py-20 px-6">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
+            Questions fréquentes
+          </h2>
+          <FaqAccordion />
+        </div>
+      </section>
+
+      {/* ── FORMULAIRE ── */}
+      <section id="postuler" className="py-20 px-6 bg-zinc-950 border-t border-blue-800/40">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Prêt à changer ta trajectoire?
+            </h2>
+            <p className="text-zinc-400 text-lg">
+              30 minutes · Entrevue exploratoire · Aucun engagement
+            </p>
+          </div>
+          <form action="/api/apply" method="POST" className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="firstName" className="block text-sm text-zinc-400 mb-2">
+                  Prénom *
+                </label>
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
+                  placeholder="Alex"
+                />
+              </div>
+              <div>
+                <label htmlFor="lastName" className="block text-sm text-zinc-400 mb-2">
+                  Nom *
+                </label>
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
+                  placeholder="Tremblay"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="email" className="block text-sm text-zinc-400 mb-2">
+                  Courriel *
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
+                  placeholder="alex@exemple.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm text-zinc-400 mb-2">
+                  Téléphone *
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
+                  placeholder="514-000-0000"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="city" className="block text-sm text-zinc-400 mb-2">
+                  Ville *
+                </label>
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  required
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
+                  placeholder="Montréal"
+                />
+              </div>
+              <div>
+                <label htmlFor="experience" className="block text-sm text-zinc-400 mb-2">
+                  Expérience en vente
+                </label>
+                <select
+                  id="experience"
+                  name="experience"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500"
                 >
-                  ▼
-                </motion.span>
-              </button>
+                  <option value="">Sélectionne...</option>
+                  <option value="aucune">Aucune</option>
+                  <option value="moins-1-an">Moins d&apos;un an</option>
+                  <option value="1-3-ans">1 à 3 ans</option>
+                  <option value="3-ans-plus">3 ans et plus</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="source" className="block text-sm text-zinc-400 mb-2">
+                Comment as-tu entendu parler d&apos;EVO LIFE?
+              </label>
+              <select
+                id="source"
+                name="source"
+                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+              >
+                <option value="">Sélectionne...</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="referral">Référence d&apos;un ami</option>
+                <option value="google">Google</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm text-zinc-400 mb-2">
+                Pourquoi EVO LIFE? (optionnel)
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 resize-none"
+                placeholder="Dis-nous ce qui t'attire dans cette opportunité..."
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-lg transition-colors"
+            >
+              Soumettre ma candidature →
+            </button>
+            <p className="text-zinc-500 text-sm text-center">
+              Aucun engagement. On te répond dans les 24h ouvrables.
+            </p>
+          </form>
+        </div>
+      </section>
 
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="px-6 pb-5 text-white/60 leading-relaxed">{faq.a}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Footer CTA ───────────────────────────────────────────────────────────────
-
-function FooterCTA() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
-  return (
-    <section ref={ref} className="py-24 bg-[#1d4ed8] px-4">
-      <div className="max-w-3xl mx-auto text-center">
-        <motion.h2
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="text-3xl md:text-5xl font-bold text-white mb-8"
-        >
-          Ta prochaine étape commence maintenant.
-        </motion.h2>
-
-        <motion.a
-          href="#apply"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.2 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-block px-10 py-5 bg-white text-[#1d4ed8] font-bold text-xl rounded-xl hover:bg-white/90 transition-colors shadow-2xl"
+      {/* ── FOOTER CTA ── */}
+      <section className="bg-blue-700 py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold text-white mb-6">
+          Ta carrière à 6 chiffres commence par une conversation
+        </h2>
+        <a
+          href="#postuler"
+          className="inline-block bg-white text-blue-700 font-bold px-8 py-4 rounded-xl text-lg hover:bg-zinc-100 transition-colors"
         >
           Postuler maintenant
-        </motion.a>
-      </div>
-    </section>
-  )
-}
+        </a>
+      </section>
 
-// ─── Footer ───────────────────────────────────────────────────────────────────
-
-function Footer() {
-  return (
-    <footer className="py-8 bg-[#0a0a0a] border-t border-white/5 px-4">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-center md:text-left">
-          <span className="text-gradient-gold font-bold text-lg">EVO LIFE</span>
-          <p className="text-white/30 text-sm mt-1">
-            © 2026 EVO LIFE | GESTION GRDT INC | Montréal, Québec
+      {/* ── FOOTER ── */}
+      <footer className="bg-zinc-950 border-t border-zinc-800 py-10 px-6">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-amber-400 font-bold text-xl">EVO LIFE</span>
+          <p className="text-zinc-500 text-sm">
+            &copy; {new Date().getFullYear()} EVO LIFE. Tous droits réservés. Montréal, Québec.
           </p>
         </div>
-        <div className="flex gap-6 text-sm text-white/40">
-          <a href="#" className="hover:text-white/70 transition-colors">
-            Confidentialité
-          </a>
-          <a href="#" className="hover:text-white/70 transition-colors">
-            Contact
-          </a>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export default function Page() {
-  return (
-    <main>
-      <Navbar />
-      <HeroSection />
-      <StatsSection />
-      <ProblemSection />
-      <SolutionSection />
-      <ProcessSection />
-      <ProfileSection />
-      <FormSection />
-      <FAQSection />
-      <FooterCTA />
-      <Footer />
+      </footer>
     </main>
   )
 }
