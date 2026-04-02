@@ -256,37 +256,7 @@ export default function Home() {
         </a>
       </section>
 
-      {/* ── 3. STATS ── */}
-      <section style={{
-        background: '#060606',
-        borderTop: '1px solid #1a1a2e',
-        borderBottom: '1px solid #1a1a2e',
-        padding: '5rem 1.5rem',
-      }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))',
-          gap: '2rem',
-          maxWidth: '800px',
-          margin: '0 auto',
-          textAlign: 'center',
-        }}>
-          {[
-            { num: '34', label: 'Modules de formation' },
-            { num: '100%', label: 'Commission — Pas de plafond' },
-            { num: 'IA 24/7', label: 'Support & Leads automatisés' },
-          ].map((stat) => (
-            <div key={stat.num}>
-              <div style={{ color: '#2563eb', fontSize: '3rem', fontWeight: 900, lineHeight: 1 }}>
-                {stat.num}
-              </div>
-              <div style={{ color: '#9ca3af', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* ── 4. COMMENT CA FONCTIONNE ── */}
       <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
@@ -398,42 +368,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 6. SOLUTION EVO LIFE ── */}
-      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <h2 style={{
-            color: 'white',
-            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
-            fontWeight: 800,
-            textAlign: 'center',
-            marginBottom: '3rem',
-          }}>
-            Ce que tu obtiens avec EVO LIFE
-          </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
-            gap: '1.5rem',
-          }}>
-            {advantages.map((card) => (
-              <div key={card.title} style={{
-                background: '#0f0f0f',
-                border: '1px solid #1e1e2e',
-                borderRadius: '16px',
-                padding: '2rem',
-              }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>{card.icon}</div>
-                <div style={{ color: 'white', fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.75rem' }}>
-                  {card.title}
-                </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.7 }}>
-                  {card.text}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* ── 7. PARCOURS DE CHARLES ── */}
       <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
@@ -506,60 +441,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 8. COMPARAISON ── */}
-      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <h2 style={{
-            color: 'white',
-            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
-            fontWeight: 800,
-            textAlign: 'center',
-            marginBottom: '3rem',
-          }}>
-            EVO LIFE vs Cabinet traditionnel
-          </h2>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              background: '#0f0f0f',
-              borderRadius: '12px',
-              overflow: 'hidden',
-            }}>
-              <thead>
-                <tr style={{ background: '#111827' }}>
-                  <th style={{ color: '#9ca3af', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-                    Critère
-                  </th>
-                  <th style={{ color: '#60a5fa', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-                    EVO LIFE
-                  </th>
-                  <th style={{ color: '#9ca3af', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-                    Cabinet traditionnel
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map((row, i) => (
-                  <tr key={row.aspect} style={{ borderBottom: i < comparisonRows.length - 1 ? '1px solid #1e1e2e' : 'none' }}>
-                    <td style={{ padding: '1rem', color: '#6b7280', fontSize: '0.9rem', fontWeight: 500 }}>
-                      {row.aspect}
-                    </td>
-                    <td style={{ padding: '1rem', color: '#60a5fa', fontSize: '0.9rem', fontWeight: 600 }}>
-                      {row.evo}
-                    </td>
-                    <td style={{ padding: '1rem', color: '#4b5563', fontSize: '0.9rem' }}>
-                      {row.autre}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 9. FILTRE ── */}
+      {/* ── 8. FILTRE ── */}
       <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -636,6 +518,59 @@ export default function Home() {
                 Alors tu es probablement fait pour EVO LIFE.
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 9. COMPARAISON ── */}
+      <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{
+            color: 'white',
+            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '3rem',
+          }}>
+            EVO LIFE vs Cabinet traditionnel
+          </h2>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              background: '#0f0f0f',
+              borderRadius: '12px',
+              overflow: 'hidden',
+            }}>
+              <thead>
+                <tr style={{ background: '#111827' }}>
+                  <th style={{ color: '#9ca3af', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                    Critère
+                  </th>
+                  <th style={{ color: '#60a5fa', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                    EVO LIFE
+                  </th>
+                  <th style={{ color: '#9ca3af', padding: '1rem', textAlign: 'left', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+                    Cabinet traditionnel
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row, i) => (
+                  <tr key={row.aspect} style={{ borderBottom: i < comparisonRows.length - 1 ? '1px solid #1e1e2e' : 'none' }}>
+                    <td style={{ padding: '1rem', color: '#6b7280', fontSize: '0.9rem', fontWeight: 500 }}>
+                      {row.aspect}
+                    </td>
+                    <td style={{ padding: '1rem', color: '#60a5fa', fontSize: '0.9rem', fontWeight: 600 }}>
+                      {row.evo}
+                    </td>
+                    <td style={{ padding: '1rem', color: '#4b5563', fontSize: '0.9rem' }}>
+                      {row.autre}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
