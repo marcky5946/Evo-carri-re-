@@ -45,24 +45,6 @@ const fieldWrap: React.CSSProperties = {
   gap: '0',
 }
 
-const advantages = [
-  {
-    icon: '🎓',
-    title: 'Formation complète',
-    text: '34 modules structurés, accessibles en ligne avec coaching live. De zéro à conseiller certifié en 4 à 8 semaines.',
-  },
-  {
-    icon: '🤖',
-    title: 'Leads fournis par IA',
-    text: "Nos systèmes IA qualifient tes prospects et préparent tes rencontres. Tu te concentres sur les clients, l'IA fait le reste.",
-  },
-  {
-    icon: '📊',
-    title: 'Outils de pointe',
-    text: 'CRM dédié, scripts de vente testés, bibliothèque de ressources. Tout est prêt — tu appliques et tu fermes.',
-  },
-]
-
 const comparisonRows = [
   { aspect: 'Formation', evo: '34 modules structurés', autre: 'Manuel PDF ou rien' },
   { aspect: 'Leads', evo: 'Fournis par IA', autre: 'À trouver seul' },
@@ -150,7 +132,7 @@ export default function Home() {
             letterSpacing: '0.02em',
           }}
         >
-          Voir si je suis admissible
+          Postuler
         </a>
       </nav>
 
@@ -256,7 +238,54 @@ export default function Home() {
         </a>
       </section>
 
-
+      {/* ── 3. TU TE DEMANDES SUREMENT ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{
+            color: 'white',
+            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '3rem',
+          }}>
+            Tu te demandes sûrement...
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+            gap: '1.5rem',
+          }}>
+            {[
+              {
+                question: 'Est-ce que je suis capable?',
+                answer: "Oui. 90% de nos conseillers n'avaient aucune expérience en finance. Notre formation te prend par la main.",
+              },
+              {
+                question: "C'est quoi mon quotidien?",
+                answer: 'Tu reçois des leads, tu fais des appels, tu présentes des solutions financières. Simple et structuré.',
+              },
+              {
+                question: "C'est quoi le catch?",
+                answer: "Rien. 100% performance. Pas de frais cachés. Si tu ne vends pas, tu ne gagnes pas. Si tu vends, pas de plafond.",
+              },
+            ].map((item) => (
+              <div key={item.question} style={{
+                background: '#0f0f0f',
+                border: '1px solid #2563eb',
+                borderRadius: '16px',
+                padding: '2rem',
+              }}>
+                <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
+                  {item.question}
+                </div>
+                <div style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.7 }}>
+                  {item.answer}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── 4. COMMENT CA FONCTIONNE ── */}
       <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
@@ -319,58 +348,130 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 5. TU TE DEMANDES SUREMENT ── */}
-      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <h2 style={{
+      {/* ── CTA between 4-5 ── */}
+      <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: '#0a0a0a' }}>
+        <a
+          href="#postuler"
+          style={{
+            display: 'inline-block',
+            background: '#2563eb',
             color: 'white',
-            fontSize: 'clamp(1.75rem,4vw,2.5rem)',
-            fontWeight: 800,
-            textAlign: 'center',
-            marginBottom: '3rem',
-          }}>
-            Tu te demandes sûrement...
-          </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-            gap: '1.5rem',
-          }}>
-            {[
-              {
-                question: 'Est-ce que je suis capable?',
-                answer: "Oui. 90% de nos conseillers n'avaient aucune expérience en finance. Notre formation te prend par la main.",
-              },
-              {
-                question: "C'est quoi mon quotidien?",
-                answer: 'Tu reçois des leads, tu fais des appels, tu présentes des solutions financières. Simple et structuré.',
-              },
-              {
-                question: "C'est quoi le catch?",
-                answer: "Rien. 100% performance. Pas de frais cachés. Si tu ne vends pas, tu ne gagnes pas. Si tu vends, pas de plafond.",
-              },
-            ].map((item) => (
-              <div key={item.question} style={{
-                background: '#0f0f0f',
-                border: '1px solid #2563eb',
-                borderRadius: '16px',
-                padding: '2rem',
-              }}>
-                <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
-                  {item.question}
-                </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.7 }}>
-                  {item.answer}
-                </div>
+            padding: '1rem 3rem',
+            borderRadius: '12px',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Commencer le processus →
+        </a>
+      </div>
+
+      {/* ── 5. FILTRE ── */}
+      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.5rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Attends. Ce n&apos;est PAS pour tout le monde.
+            </h2>
+            <p style={{ color: '#6b7280', fontSize: '1rem' }}>
+              On préfère être honnêtes maintenant plutôt que perdre ton temps.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '2rem' }}>
+            {/* NOT FOR */}
+            <div style={{
+              background: '#0f0f0f',
+              border: '1px solid #3f1010',
+              borderRadius: '16px',
+              padding: '2rem',
+            }}>
+              <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
+                ✗ &nbsp;Pas pour toi si...
               </div>
-            ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                {[
+                  'Tu cherches un revenu garanti sans effort',
+                  "Tu n'es pas prêt à apprendre et te former",
+                  'Tu veux un 9 à 5 confortable sans stress',
+                  "Tu n'es pas à l'aise de parler aux gens",
+                  'Tu veux des résultats sans mettre le travail',
+                ].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                    <span style={{ color: '#f87171', flexShrink: 0, marginTop: '2px' }}>✗</span>
+                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FOR */}
+            <div style={{
+              background: '#0f0f0f',
+              border: '1px solid #14532d',
+              borderRadius: '16px',
+              padding: '2rem',
+            }}>
+              <div style={{ color: '#4ade80', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
+                ✓ &nbsp;Par contre, si...
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                {[
+                  'Tu veux un revenu sans plafond basé sur tes efforts',
+                  'Tu es prêt à apprendre un nouveau métier',
+                  'Tu veux un système qui travaille pour toi',
+                  'Tu aimes aider les gens',
+                  'Tu es prêt à te dépasser',
+                ].map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                    <span style={{ color: '#4ade80', flexShrink: 0, marginTop: '2px' }}>✓</span>
+                    <span style={{ color: '#d1d5db', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                marginTop: '1.5rem',
+                padding: '1rem',
+                background: 'rgba(37,99,235,0.1)',
+                border: '1px solid rgba(37,99,235,0.3)',
+                borderRadius: '10px',
+                color: '#60a5fa',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                textAlign: 'center',
+              }}>
+                Alors tu es probablement fait pour EVO LIFE.
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ── CTA between 5-6 ── */}
+      <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: '#060606' }}>
+        <a
+          href="#postuler"
+          style={{
+            display: 'inline-block',
+            background: '#2563eb',
+            color: 'white',
+            padding: '1rem 3rem',
+            borderRadius: '12px',
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            textDecoration: 'none',
+            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
+            letterSpacing: '0.01em',
+          }}
+        >
+          Postuler maintenant →
+        </a>
+      </div>
 
-
-      {/* ── 7. PARCOURS DE CHARLES ── */}
+      {/* ── 6. PARCOURS DE CHARLES ── */}
       <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
         <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{
@@ -441,88 +542,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 8. FILTRE ── */}
-      <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ color: 'white', fontSize: 'clamp(1.75rem,4vw,2.5rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
-              Attends. Ce n&apos;est PAS pour tout le monde.
-            </h2>
-            <p style={{ color: '#6b7280', fontSize: '1rem' }}>
-              On préfère être honnêtes maintenant plutôt que perdre ton temps.
-            </p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '2rem' }}>
-            {/* NOT FOR */}
-            <div style={{
-              background: '#0f0f0f',
-              border: '1px solid #3f1010',
-              borderRadius: '16px',
-              padding: '2rem',
-            }}>
-              <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
-                ✗ &nbsp;Pas pour toi si...
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-                {[
-                  'Tu cherches un revenu garanti sans effort',
-                  'Tu n\'es pas prêt à apprendre et te former',
-                  'Tu veux un 9 à 5 confortable sans stress',
-                  'Tu n\'es pas à l\'aise de parler aux gens',
-                  'Tu veux des résultats sans mettre le travail',
-                ].map((item) => (
-                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                    <span style={{ color: '#f87171', flexShrink: 0, marginTop: '2px' }}>✗</span>
-                    <span style={{ color: '#9ca3af', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* FOR */}
-            <div style={{
-              background: '#0f0f0f',
-              border: '1px solid #14532d',
-              borderRadius: '16px',
-              padding: '2rem',
-            }}>
-              <div style={{ color: '#4ade80', fontWeight: 700, fontSize: '1rem', marginBottom: '1.5rem' }}>
-                ✓ &nbsp;Par contre, si...
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-                {[
-                  'Tu veux un revenu sans plafond basé sur tes efforts',
-                  'Tu es prêt à apprendre un nouveau métier',
-                  'Tu veux un système qui travaille pour toi',
-                  'Tu aimes aider les gens',
-                  'Tu es prêt à te dépasser',
-                ].map((item) => (
-                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                    <span style={{ color: '#4ade80', flexShrink: 0, marginTop: '2px' }}>✓</span>
-                    <span style={{ color: '#d1d5db', fontSize: '0.9rem', lineHeight: 1.5 }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-              <div style={{
-                marginTop: '1.5rem',
-                padding: '1rem',
-                background: 'rgba(37,99,235,0.1)',
-                border: '1px solid rgba(37,99,235,0.3)',
-                borderRadius: '10px',
-                color: '#60a5fa',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                textAlign: 'center',
-              }}>
-                Alors tu es probablement fait pour EVO LIFE.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 9. COMPARAISON ── */}
+      {/* ── 7. COMPARAISON ── */}
       <section style={{ background: '#0a0a0a', padding: '6rem 1.5rem' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h2 style={{
@@ -575,7 +595,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 10. FORMULAIRE ── */}
+      {/* ── 8. FORMULAIRE ── */}
       <section id="postuler" style={{
         background: '#0a0a0a',
         padding: '6rem 1.5rem',
@@ -917,7 +937,7 @@ export default function Home() {
                   {[
                     { num: '1', title: 'Évaluation', text: 'On examine ta candidature dans les 24–48h.' },
                     { num: '2', title: 'Appel exploratoire', text: 'Si ton profil est retenu, on te contacte pour un appel de 15 minutes.' },
-                    { num: '3', title: 'Onboarding', text: 'Si c\'est un bon fit, tu commences ta formation immédiatement.' },
+                    { num: '3', title: 'Onboarding', text: "Si c'est un bon fit, tu commences ta formation immédiatement." },
                   ].map((step) => (
                     <div key={step.num} style={{
                       display: 'flex',
@@ -988,7 +1008,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 11. FAQ ── */}
+      {/* ── 9. FAQ ── */}
       <section style={{ background: '#060606', padding: '6rem 1.5rem', borderTop: '1px solid #1a1a2e' }}>
         <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <h2 style={{
@@ -1004,7 +1024,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 12. FOOTER CTA ── */}
+      {/* ── 10. FOOTER CTA ── */}
       <section style={{
         background: '#1d4ed8',
         padding: '5rem 1.5rem',
@@ -1030,11 +1050,11 @@ export default function Home() {
             letterSpacing: '0.02em',
           }}
         >
-          Commencer le processus →
+          Rejoindre EVO LIFE →
         </a>
       </section>
 
-      {/* ── 13. FOOTER ── */}
+      {/* ── 11. FOOTER ── */}
       <footer style={{
         padding: '2rem',
         background: '#050505',
